@@ -1,11 +1,13 @@
 // src/hooks/useRoadmapFilters.ts
-import { useState, useMemo } from "react";
-import type { Topic, SubTopic, DifficultyLevel } from "@/shared/types";
+import { useMemo, useState } from 'react';
+
+import { difficultyOptions } from '@/features/roadmap/constants'; // Import from constants
+import type { DifficultyLevel, SubTopic, Topic } from '@/shared/types';
 
 export function useRoadmapFilters(fullRoadmap: Topic[]) {
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedDifficulty, setSelectedDifficulty] =
-    useState<DifficultyLevel>("All");
+    useState<DifficultyLevel>('All');
 
   const filteredRoadmap = useMemo(() => {
     const lowerSearchTerm = searchTerm.toLowerCase().trim();
@@ -16,12 +18,12 @@ export function useRoadmapFilters(fullRoadmap: Topic[]) {
           (subTopic) => ({
             ...subTopic,
             leetcodeProblems:
-              selectedDifficulty === "All"
+              selectedDifficulty === 'All'
                 ? subTopic.leetcodeProblems
                 : subTopic.leetcodeProblems.filter(
-                    (p) => p.difficulty === selectedDifficulty
+                    (p) => p.difficulty === selectedDifficulty,
                   ),
-          })
+          }),
         );
 
         if (!lowerSearchTerm) {
@@ -46,10 +48,9 @@ export function useRoadmapFilters(fullRoadmap: Topic[]) {
               subTopic.leetcodeProblems.some(
                 (p) =>
                   p.name.toLowerCase().includes(lowerSearchTerm) ||
-                  (p.customTags &&
-                    p.customTags.some((ct) =>
-                      ct.toLowerCase().includes(lowerSearchTerm)
-                    ))
+                  p.customTags?.some((ct) =>
+                    ct.toLowerCase().includes(lowerSearchTerm),
+                  ),
               );
 
             if (subTopicTitleMatchesSearch || problemsInSubTopicMatchSearch) {
@@ -71,12 +72,7 @@ export function useRoadmapFilters(fullRoadmap: Topic[]) {
       .filter((t): t is Topic => t !== null);
   }, [fullRoadmap, searchTerm, selectedDifficulty]);
 
-  const difficultyOptions: DifficultyLevel[] = [
-    "All",
-    "Easy",
-    "Medium",
-    "Hard",
-  ];
+  // difficultyOptions is now imported
 
   return {
     searchTerm,
@@ -84,6 +80,6 @@ export function useRoadmapFilters(fullRoadmap: Topic[]) {
     selectedDifficulty,
     setSelectedDifficulty,
     filteredRoadmap,
-    difficultyOptions,
+    difficultyOptions, // Still export it for the Header component
   };
 }

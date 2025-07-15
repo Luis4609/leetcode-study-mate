@@ -1,16 +1,50 @@
 // src/utils/roadmapUtils.ts
+import { initialRoadmapData as defaultInitialRoadmapData } from "@/features/roadmap/data"; // Assuming this is the path
 import type { LeetCodeProblem, SubTopic, Topic } from "@/shared/types";
-import { initialRoadmapData as defaultInitialRoadmapData } from "@/features/Roadmap/data"; // Assuming this is the path
 
 // Helper to merge a single problem, prioritizing saved data
 function mergeProblem(
   initialProblem: LeetCodeProblem,
-  savedProblem?: Partial<LeetCodeProblem> // Saved problem might be partial or have different structure over time
+  savedProblem?: Partial<LeetCodeProblem>
 ): LeetCodeProblem {
-  if (!savedProblem) return initialProblem;
+  if (!initialProblem.id) {
+    // Should not happen if createProblem is used
+    console.error(
+      "Critical: Initial problem data is missing an ID!",
+      initialProblem
+    );
+  }
+
+  if (!savedProblem) {
+    return {
+      ...initialProblem,
+      userSolutions: initialProblem.userSolutions || {},
+      currentLanguage: initialProblem.currentLanguage || "javascript", // Set a default if none
+      testCases: initialProblem.testCases || [], // Ensure testCases are present
+    };
+  }
+
+  // Prioritize saved user solutions, but merge with initial if saved is partial
+  const mergedUserSolutions = {
+    ...(initialProblem.userSolutions || {}),
+    ...(savedProblem.userSolutions || {}),
+  };
+
   return {
-    ...initialProblem,
-    ...savedProblem,
+    ...initialProblem, // Start with initial structure (URL, difficulty, tags, default test cases)
+    ...savedProblem, // Overlay all saved fields (status, notes, etc.)
+    id: initialProblem.id,
+    // Specific merge for new/complex fields
+    userSolutions: mergedUserSolutions,
+    currentLanguage:
+      savedProblem.currentLanguage ||
+      initialProblem.currentLanguage ||
+      "javascript",
+    testCases: initialProblem.testCases || [], // Test cases usually come from the source, not user-saved
+    // lastTestRun can be directly from savedProblem as it's user-specific session data
+    lastTestRun: savedProblem.lastTestRun || undefined,
+
+    // Re-apply specific fields from previous merge logic if necessary for your data integrity
     description:
       savedProblem.description !== undefined
         ? savedProblem.description
@@ -19,20 +53,7 @@ function mergeProblem(
       savedProblem.problemSpecificNotes !== undefined
         ? savedProblem.problemSpecificNotes
         : initialProblem.problemSpecificNotes,
-    solutionLinks:
-      savedProblem.solutionLinks || initialProblem.solutionLinks || [],
-    attempts: savedProblem.attempts || initialProblem.attempts || [],
-    subTasks: savedProblem.subTasks || initialProblem.subTasks || [],
-    status: savedProblem.status || initialProblem.status || "Not Started",
-    customTags: savedProblem.customTags || initialProblem.customTags || [],
-    isPriority:
-      savedProblem.isPriority !== undefined
-        ? savedProblem.isPriority
-        : initialProblem.isPriority || false,
-    deadline:
-      savedProblem.deadline !== undefined
-        ? savedProblem.deadline
-        : initialProblem.deadline || "",
+    // ... other fields like status, isPriority, etc., should be covered by ...savedProblem if present
   };
 }
 
@@ -57,7 +78,8 @@ function mergeSubTopic(
 
   // Ensure new problems from initialData are added if not in saved data
   const newProblemsInInitial = initialSubTopic.leetcodeProblems.filter(
-    initialProblem => !mergedLeetCodeProblems.find(p => p.name === initialProblem.name)
+    (initialProblem) =>
+      !mergedLeetCodeProblems.find((p) => p.name === initialProblem.name)
   );
 
   return {
@@ -86,11 +108,11 @@ function mergeTopic(
     mergeSubTopic(initialSubTopic, savedTopic.subTopics)
   );
 
-   // Ensure new subtopics from initialData are added
+  // Ensure new subtopics from initialData are added
   const newSubTopicsInInitial = initialTopic.subTopics.filter(
-    initialSubTopic => !mergedSubTopics.find(st => st.id === initialSubTopic.id)
+    (initialSubTopic) =>
+      !mergedSubTopics.find((st) => st.id === initialSubTopic.id)
   );
-
 
   return {
     ...initialTopic,
@@ -133,5 +155,5 @@ export function initializeRoadmap(
       localStorage.removeItem("leetcodeRoadmap"); // Clear potentially corrupted data
     }
   }
-  return initialData.map(topic => ({ ...topic })); // Return a fresh copy of initial data
+  return initialData.map((topic) => ({ ...topic })); // Return a fresh copy of initial data
 }
