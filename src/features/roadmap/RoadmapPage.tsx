@@ -30,7 +30,7 @@ const RoadmapPage: React.FC = () => {
   const navigate = useNavigate();
 
   // Renamed for clarity: This function handles navigating to the problem's editor page.
-  const handleViewProblem = (problem: LeetCodeProblem, topicId: string, subTopicId: string) => {
+  const handleViewProblem = (problem: LeetCodeProblem) => {
     // The problem.id should be the unique ID used in the route.
     navigate(`/problem/${problem.id}`);
   };

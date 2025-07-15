@@ -12,7 +12,7 @@ interface LeetCodeProblemItemProps {
   problem: LeetCodeProblem;
   topicId: string;
   subTopicId: string;
-  onOpenModal: (
+  onViewProblem: (
     problem: LeetCodeProblem,
     topicId: string,
     subTopicId: string,
@@ -25,14 +25,14 @@ const LeetCodeProblemItem: React.FC<LeetCodeProblemItemProps> = memo(
     problem,
     topicId,
     subTopicId,
-    onOpenModal,
+    onViewProblem,
   }) => {
     const statusInfo = getStatusIndicator(problem.status);
     return (
       <li className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 hover:bg-slate-100 rounded-md transition-colors duration-150 border-b border-slate-200 last:border-b-0">
         <div className="flex-grow mb-2 sm:mb-0">
           <button
-            onClick={() => onOpenModal(problem, topicId, subTopicId)}
+            onClick={() => onViewProblem(problem, topicId, subTopicId)}
             className="flex items-center text-left w-full group mb-1"
             aria-label={`View details for ${problem.name}`}
           >

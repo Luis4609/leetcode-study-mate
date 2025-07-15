@@ -183,7 +183,7 @@ const ProblemMetadataForm: React.FC<ProblemMetadataFormProps> = ({
           {(problem.solutionLinks || []).map((link) => (
             <div key={link.id} className="flex items-center justify-between bg-slate-700 p-2 rounded-md text-sm">
               <a href={link.url} target="_blank" rel="noopener noreferrer" className="text-sky-400 hover:underline truncate" title={link.url}>{link.name}</a>
-              <button onClick={() => removeSolutionLink(link)} className="text-red-400 hover:text-red-300 ml-2"><Trash2 size={16} /></button>
+              <button onClick={() => removeSolutionLink(link.id)} className="text-red-400 hover:text-red-300 ml-2"><Trash2 size={16} /></button>
             </div>
           ))}
           <div className="flex gap-2 items-end">

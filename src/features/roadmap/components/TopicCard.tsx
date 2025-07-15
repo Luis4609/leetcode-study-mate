@@ -17,7 +17,7 @@ interface TopicCardProps {
     subTopicId: string,
     notes: string,
   ) => void;
-  onOpenProblemModal: (
+  onViewProblem: (
     problem: LeetCodeProblem,
     topicId: string,
     subTopicId: string,
@@ -31,7 +31,7 @@ const TopicCard: React.FC<TopicCardProps> = memo(
     onToggle,
     onToggleCompleteSubTopic,
     onNotesChangeSubTopic,
-    onOpenProblemModal,
+    onViewProblem,
   }) => {
     const completedSubTopics = topic.subTopics.filter(
       (st) => st.completed,
@@ -104,7 +104,7 @@ const TopicCard: React.FC<TopicCardProps> = memo(
                   topicId={topic.id}
                   onToggleComplete={onToggleCompleteSubTopic}
                   onNotesChange={onNotesChangeSubTopic}
-                  onOpenProblemModal={onOpenProblemModal}
+                  onViewProblem={onViewProblem}
                 />
               ))
             ) : (

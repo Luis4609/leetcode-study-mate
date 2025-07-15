@@ -5,14 +5,7 @@ import { Link } from "react-router-dom";
 
 const ProblemListItem: React.FC<{
   problem: LeetCodeProblem;
-  topicId: string;
-  subTopicId: string;
-  onViewProblem: (
-    problem: LeetCodeProblem,
-    topicId: string,
-    subTopicId: string
-  ) => void;
-}> = ({ problem, topicId, subTopicId, onViewProblem }) => {
+}> = ({ problem }) => {
   const difficultyColor = {
     Easy: "text-green-400",
     Medium: "text-yellow-400",
