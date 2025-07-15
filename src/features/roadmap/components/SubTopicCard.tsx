@@ -13,7 +13,7 @@ interface SubTopicCardProps {
   topicId: string;
   onToggleComplete: (topicId: string, subTopicId: string) => void;
   onNotesChange: (topicId: string, subTopicId: string, notes: string) => void;
-  onOpenProblemModal: (
+  onViewProblem: (
     problem: LeetCodeProblem,
     topicId: string,
     subTopicId: string,
@@ -27,7 +27,7 @@ const SubTopicCard: React.FC<SubTopicCardProps> = memo(
     topicId,
     onToggleComplete,
     onNotesChange,
-    onOpenProblemModal,
+    onViewProblem,
   }) => {
     const [notes, setNotes] = useState<string>(subTopic.notes || '');
 
@@ -101,7 +101,7 @@ const SubTopicCard: React.FC<SubTopicCardProps> = memo(
                     problem={problem}
                     topicId={topicId}
                     subTopicId={subTopic.id}
-                    onOpenModal={onOpenProblemModal}
+                    onViewProblem={onViewProblem}
                   />
                 ))}
               </ul>
