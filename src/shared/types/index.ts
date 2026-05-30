@@ -94,13 +94,15 @@ export interface LeetCodeProblem {
   lastTestRun?: {
     language: ProgrammingLanguage;
     timestamp: string;
-    results: Array<{
+    results: {
       testCaseId: string;
       passed: boolean;
       actualOutput?: string;
       error?: string;
-    }>;
+      duration?: number;
+    }[];
     consoleOutput?: string;
+    isSimulated?: boolean;
   };
 }
 

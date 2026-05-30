@@ -8,13 +8,13 @@ interface ResourceItemProps {
 }
 
 const ResourceItem: React.FC<ResourceItemProps> = ({ resource }) => (
-  <li className="flex items-center p-3 hover:bg-slate-100 rounded-md transition-colors duration-150">
-    <BookOpen size={18} className="mr-3 text-indigo-500 flex-shrink-0" />
+  <li className="flex items-center p-2 hover:bg-slate-950/40 rounded-md transition-all duration-150">
+    <BookOpen size={15} className="mr-2.5 text-indigo-400 flex-shrink-0" />
     <a
       href={resource.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="text-indigo-600 hover:text-indigo-800 hover:underline transition-colors duration-150 text-sm sm:text-base break-words"
+      className="text-sky-400 hover:text-sky-350 hover:underline transition-colors duration-150 text-xs sm:text-sm break-words font-semibold"
     >
       {resource.name}
     </a>

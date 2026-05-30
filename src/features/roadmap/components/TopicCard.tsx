@@ -41,50 +41,50 @@ const TopicCard: React.FC<TopicCardProps> = memo(
       totalSubTopics > 0 ? (completedSubTopics / totalSubTopics) * 100 : 0;
 
     return (
-      <div className="mb-6 bg-slate-50 rounded-xl shadow-lg overflow-hidden transition-all duration-300 ease-in-out hover:shadow-xl">
+      <div className="mb-6 bg-slate-800/25 backdrop-blur-md rounded-xl border border-slate-800/80 overflow-hidden hover:border-sky-500/30 hover:shadow-lg hover:shadow-sky-500/5 transition-all duration-350">
         <button
           onClick={() => onToggle(topic.id)}
-          className="w-full flex flex-col sm:flex-row items-center justify-between p-5 sm:p-6 text-left bg-gradient-to-r from-blue-600 to-indigo-700 text-white hover:from-blue-700 hover:to-indigo-800 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-indigo-400 focus:ring-opacity-75"
+          className="w-full flex flex-col sm:flex-row items-center justify-between p-5 sm:p-6 text-left bg-slate-900/30 hover:bg-slate-850/40 text-slate-100 transition-all duration-300 focus:outline-none"
           aria-expanded={topic.isExpanded}
           aria-controls={`topic-content-${topic.id}`}
         >
           <div className="w-full">
             <div className="flex justify-between items-center w-full">
-              <h3 className="text-xl sm:text-2xl font-bold">{topic.title}</h3>
+              <h3 className="text-xl sm:text-2xl font-extrabold text-slate-100 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">{topic.title}</h3>
               {topic.isExpanded ? (
                 <ChevronDown
-                  size={28}
-                  className="flex-shrink-0 ml-2 hidden sm:block"
+                  size={24}
+                  className="flex-shrink-0 ml-2 hidden sm:block text-slate-400"
                   aria-hidden="true"
                 />
               ) : (
                 <ChevronRight
-                  size={28}
-                  className="flex-shrink-0 ml-2 hidden sm:block"
+                  size={24}
+                  className="flex-shrink-0 ml-2 hidden sm:block text-slate-400"
                   aria-hidden="true"
                 />
               )}
             </div>
-            <p className="text-sm text-indigo-100 mt-1 pr-8 sm:pr-0">
+            <p className="text-xs text-slate-400 mt-1 pr-8 sm:pr-0 leading-relaxed">
               {topic.description}
             </p>
             <ProgressBar percentage={progressPercentage} />
-            <div className="text-xs text-indigo-200 mt-1">
-              {`${completedSubTopics} / ${totalSubTopics} sub-topics completed (${Math.round(
+            <div className="text-[10px] font-bold text-sky-400/80 mt-1 uppercase tracking-wider">
+              {`${completedSubTopics} / ${totalSubTopics} sub-temas completados (${Math.round(
                 progressPercentage,
               )}%)`}
             </div>
           </div>
           {topic.isExpanded ? (
             <ChevronDown
-              size={24}
-              className="flex-shrink-0 ml-2 sm:hidden self-center mt-2"
+              size={20}
+              className="flex-shrink-0 ml-2 sm:hidden self-center mt-2 text-slate-400"
               aria-hidden="true"
             />
           ) : (
             <ChevronRight
-              size={24}
-              className="flex-shrink-0 ml-2 sm:hidden self-center mt-2"
+              size={20}
+              className="flex-shrink-0 ml-2 sm:hidden self-center mt-2 text-slate-400"
               aria-hidden="true"
             />
           )}
@@ -92,7 +92,7 @@ const TopicCard: React.FC<TopicCardProps> = memo(
         {topic.isExpanded && (
           <div
             id={`topic-content-${topic.id}`}
-            className="p-4 sm:p-6 bg-white border-t border-slate-200"
+            className="p-4 sm:p-6 bg-slate-950/20 border-t border-slate-800/80"
             role="region" // Added role for better semantics
             aria-labelledby={`topic-title-${topic.id}`} // Assuming h3 gets an id like this
           >
@@ -108,8 +108,8 @@ const TopicCard: React.FC<TopicCardProps> = memo(
                 />
               ))
             ) : (
-              <p className="text-slate-500 text-sm p-3 bg-slate-50 rounded-md italic">
-                No sub-topics available for this topic based on current filters.
+              <p className="text-slate-500 text-xs p-3 bg-slate-950/50 rounded-lg border border-slate-900/50 italic">
+                No hay sub-temas disponibles para los filtros actuales.
               </p>
             )}
           </div>

@@ -43,39 +43,39 @@ const SubTopicCard: React.FC<SubTopicCardProps> = memo(
     const checkboxId = `complete-${topicId}-${subTopic.id}`;
 
     return (
-      <div className="bg-white p-4 rounded-lg shadow border border-slate-200 mb-4 transform hover:shadow-md transition-shadow duration-200">
-        <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-3">
-          <h4 className="text-lg font-semibold text-slate-800 mb-2 sm:mb-0">
+      <div className="bg-slate-900/30 border border-slate-800/85 p-5 rounded-xl mb-4 hover:border-slate-700/30 transition-all shadow-md">
+        <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-4">
+          <h4 className="text-md font-bold text-slate-100 mb-2 sm:mb-0">
             {subTopic.title}
           </h4>
           <div className="flex items-center">
             <label
               htmlFor={checkboxId}
-              className="mr-2 text-sm text-slate-600 select-none cursor-pointer"
+              className="mr-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider select-none cursor-pointer"
             >
-              Completed:
+              Completado:
             </label>
             <input
               type="checkbox"
               id={checkboxId}
               checked={subTopic.completed}
               onChange={handleCheckboxChange}
-              className="form-checkbox h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500 cursor-pointer"
+              className="form-checkbox h-4.5 w-4.5 text-sky-500 rounded bg-slate-950 border-slate-800 focus:ring-sky-500 focus:ring-opacity-50 cursor-pointer"
             />
           </div>
         </div>
 
         {(subTopic.resources ?? []).length > 0 && (
           <div className="mb-4">
-            <h5 className="text-md font-semibold text-slate-700 mb-2 flex items-center">
+            <h5 className="text-[10px] font-bold text-slate-400 mb-2 flex items-center uppercase tracking-wider">
               <BookOpen
-                size={16}
-                className="mr-2 text-indigo-500"
+                size={14}
+                className="mr-2 text-indigo-400"
                 aria-hidden="true"
               />
-              Learning Resources:
+              Recursos de Aprendizaje:
             </h5>
-            <ul className="space-y-1 list-inside">
+            <ul className="space-y-1 list-inside bg-slate-950/20 rounded-lg p-2 border border-slate-900/40">
               {(subTopic.resources ?? []).map((resource) => (
                 <ResourceItem key={resource.name} resource={resource} />
               ))}
@@ -85,16 +85,16 @@ const SubTopicCard: React.FC<SubTopicCardProps> = memo(
 
         {subTopic.leetcodeProblems && (
           <div className="mb-4">
-            <h5 className="text-md font-semibold text-slate-700 mb-2 flex items-center">
+            <h5 className="text-[10px] font-bold text-slate-400 mb-2 flex items-center uppercase tracking-wider">
               <Target
-                size={16}
-                className="mr-2 text-blue-500"
+                size={14}
+                className="mr-2 text-sky-400"
                 aria-hidden="true"
               />
-              LeetCode Problems:
+              Problemas de LeetCode:
             </h5>
             {subTopic.leetcodeProblems.length > 0 ? (
-              <ul className="space-y-1">
+              <ul className="space-y-1 bg-slate-950/20 rounded-lg p-2 border border-slate-900/40">
                 {subTopic.leetcodeProblems.map((problem) => (
                   <LeetCodeProblemItem
                     key={problem.name}
@@ -106,8 +106,8 @@ const SubTopicCard: React.FC<SubTopicCardProps> = memo(
                 ))}
               </ul>
             ) : (
-              <p className="text-slate-500 text-sm p-3 bg-slate-50 rounded-md italic">
-                No problems match the current filters for this sub-topic.
+              <p className="text-slate-500 text-xs p-3 bg-slate-950/50 rounded-lg border border-slate-900/50 italic">
+                No hay problemas disponibles para los filtros actuales.
               </p>
             )}
           </div>
@@ -116,17 +116,17 @@ const SubTopicCard: React.FC<SubTopicCardProps> = memo(
         <div>
           <label
             htmlFor={`notes-${topicId}-${subTopic.id}`}
-            className="text-md font-semibold text-slate-700 mb-1 block"
+            className="text-[10px] font-bold text-slate-400 mb-1.5 block uppercase tracking-wider"
           >
-            My Notes (Sub-topic):
+            Mis Notas de Estudio:
           </label>
           <textarea
             id={`notes-${topicId}-${subTopic.id}`}
             value={notes}
             onChange={handleNotesChange}
-            placeholder="Add your notes for this sub-topic..."
-            className="w-full p-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow duration-150 text-sm"
-            rows={3}
+            placeholder="Añade tus notas o apuntes para este sub-tema..."
+            className="w-full p-3 bg-slate-950 border border-slate-800 rounded-lg focus:ring-1 focus:ring-sky-500 focus:border-sky-500 text-slate-350 placeholder-slate-700 transition-all text-xs font-sans leading-relaxed"
+            rows={2}
           ></textarea>
         </div>
       </div>

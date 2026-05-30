@@ -7,7 +7,7 @@ import importPlugin from 'eslint-plugin-import'; // Renamed to avoid conflict wi
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['dist', 'node_modules', '.DS_Store', '*.log'] }, // Added more common ignores
+  { ignores: ['dist', 'node_modules', '.DS_Store', '*.log', 'eslint.config.js', 'tailwind.config.js', 'vite.config.ts'] }, // Added more common ignores
   js.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked, // Use type-aware linting
   ...tseslint.configs.stylisticTypeChecked, // Optional: for stylistic rules
